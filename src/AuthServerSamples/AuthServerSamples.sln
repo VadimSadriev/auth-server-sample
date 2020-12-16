@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthServer-EFCore", "AuthServer-EFCore", "{E49FB83D-B897-4699-B6CC-7E5CEA91D981}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.Common", "AuthServer.Common\AuthServer.Common.csproj", "{790F1BC0-5042-45D9-8461-FEE3B8365549}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServerEfCore.Web", "AuthServerEfCore.Web\AuthServerEfCore.Web.csproj", "{172093B7-9EB9-4FDF-8AB4-B74B12B0DBF4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{790F1BC0-5042-45D9-8461-FEE3B8365549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{790F1BC0-5042-45D9-8461-FEE3B8365549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{790F1BC0-5042-45D9-8461-FEE3B8365549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{790F1BC0-5042-45D9-8461-FEE3B8365549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{172093B7-9EB9-4FDF-8AB4-B74B12B0DBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{172093B7-9EB9-4FDF-8AB4-B74B12B0DBF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{172093B7-9EB9-4FDF-8AB4-B74B12B0DBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{172093B7-9EB9-4FDF-8AB4-B74B12B0DBF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{172093B7-9EB9-4FDF-8AB4-B74B12B0DBF4} = {E49FB83D-B897-4699-B6CC-7E5CEA91D981}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {44F8ED28-94DB-484C-86DA-C4C4B0E04FBD}
+	EndGlobalSection
+EndGlobal
