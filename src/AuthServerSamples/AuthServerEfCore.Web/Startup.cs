@@ -1,5 +1,7 @@
 using AuthServer.Common.Logging;
+using AuthServerEfCore.Configuration.DataLayer;
 using AuthServerEfCore.PersistedGrant.DataLayer;
+using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,12 +32,30 @@ namespace AuthServerEfCore.Web
                 {
                     opts.ConfigureDbContext = dbConfig =>
                     {
+                        var assembly = typeof(PersistedGrantContext).Assembly.GetName().Name;
+
                         dbConfig.UseNpgsql(Configuration["Database:ConnectionStrings:PersistedGrant"],
-                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(typeof(PersistedGrantContext).Assembly.GetName().Name));
+                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
+
                         dbConfig.EnableDetailedErrors();
                         dbConfig.EnableSensitiveDataLogging();
                     };
                 })
+                .AddConfigurationStore<ConfigurationContext>(opts =>
+                {
+                    opts.ConfigureDbContext = dbConfig =>
+                    {
+                        var assembly = typeof(ConfigurationContext).Assembly.GetName().Name;
+                        dbConfig.UseNpgsql(Configuration["Database:ConnectionStrings:Configuration"],
+                             npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
+
+                        dbConfig.EnableDetailedErrors();
+                        dbConfig.EnableSensitiveDataLogging();
+                    };
+                });
+
+            services.AddScoped<IPersistedGrantDbContext, PersistedGrantContext>();
+            services.AddScoped<IConfigurationDbContext, ConfigurationContext>();
 
             services.AddSerilog(Configuration);
             services.AddControllersWithViews();
