@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="EFCore.NamingConventions" Version="5.0.0" />
     <PackageReference Include="IdentityServer4.EntityFramework" Version="4.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.1" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AuthServerEfCore.DataLayer.Core\AuthServerEfCore.DataLayer.Core.csproj" />
   </ItemGroup>
 
 </Project>

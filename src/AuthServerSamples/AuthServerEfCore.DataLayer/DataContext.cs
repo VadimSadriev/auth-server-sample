@@ -16,7 +16,6 @@ namespace AuthServerEfCore.DataLayer
         /// </summary>
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            ConfigurationDbContext per;
         }
     }
 }
