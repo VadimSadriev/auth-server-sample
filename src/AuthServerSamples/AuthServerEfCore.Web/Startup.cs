@@ -1,5 +1,6 @@
 using AuthServer.Common.Logging;
 using AuthServerEfCore.Configuration.DataLayer;
+using AuthServerEfCore.DataLayer;
 using AuthServerEfCore.PersistedGrant.DataLayer;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.Stores;
@@ -56,6 +57,13 @@ namespace AuthServerEfCore.Web
 
             services.AddScoped<IPersistedGrantDbContext, PersistedGrantContext>();
             services.AddScoped<IConfigurationDbContext, ConfigurationContext>();
+
+            services.AddDbContext<DataContext>(opts =>
+            {
+                opts.UseNpgsql(Configuration["Database:ConnectionStrings:Users"]);
+                opts.EnableDetailedErrors();
+                opts.EnableSensitiveDataLogging();
+            });
 
             services.AddSerilog(Configuration);
             services.AddControllersWithViews();
