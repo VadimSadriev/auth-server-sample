@@ -1,3 +1,4 @@
+using System;
 using AuthServer.Common.Logging;
 using AuthServerEfCore.Configuration.DataLayer;
 using AuthServerEfCore.DataLayer;
