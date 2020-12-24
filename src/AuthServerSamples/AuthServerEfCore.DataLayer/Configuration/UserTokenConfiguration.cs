@@ -7,12 +7,12 @@ namespace AuthServerEfCore.DataLayer.Configuration
     /// <summary>
     /// Ef core configuration for <see cref="IdentityUserToken{T}"/>
     /// </summary>
-    public class UserTokenConfiguration : IEntityTypeConfiguration<IdentityUserToken<long>>
+    public class UserTokenConfiguration : IEntityTypeConfiguration<IdentityUserToken<string>>
     {
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public void Configure(EntityTypeBuilder<IdentityUserToken<long>> builder)
+        public void Configure(EntityTypeBuilder<IdentityUserToken<string>> builder)
         {
             builder.ToTable("user_tokens");
         }

@@ -5,7 +5,7 @@ namespace AuthServerEfCore.Entities
     /// <summary>
     /// Application user role
     /// </summary>
-    public class Role : IdentityRole<long>
+    public class Role : IdentityRole
     {
     }
 }

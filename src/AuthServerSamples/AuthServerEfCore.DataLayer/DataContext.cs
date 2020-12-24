@@ -7,7 +7,7 @@ namespace AuthServerEfCore.DataLayer
     /// <summary>
     /// Main application data context
     /// </summary>
-    public class DataContext : IdentityDbContext<User, Role, long>
+    public class DataContext : IdentityDbContext<User, Role, string>
     {
         /// <summary>
         /// <inheritdoc cref="DataContext"/>

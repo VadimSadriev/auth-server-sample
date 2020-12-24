@@ -5,7 +5,7 @@ namespace AuthServerEfCore.Entities
     /// <summary>
     /// Application user
     /// </summary>
-    public class User : IdentityUser<long>
+    public class User : IdentityUser
     {
     }
 }

@@ -7,12 +7,12 @@ namespace AuthServerEfCore.DataLayer.Configuration
     /// <summary>
     /// Ef core configuration for <see cref="IdentityRoleClaim{T}"/>
     /// </summary>
-    public class IdentityUserClaimConfiguration : IEntityTypeConfiguration<IdentityUserClaim<long>>
+    public class IdentityUserClaimConfiguration : IEntityTypeConfiguration<IdentityUserClaim<string>>
     {
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        public void Configure(EntityTypeBuilder<IdentityUserClaim<long>> builder)
+        public void Configure(EntityTypeBuilder<IdentityUserClaim<string>> builder)
         {
             builder.ToTable("identity_user_claims");
         }
