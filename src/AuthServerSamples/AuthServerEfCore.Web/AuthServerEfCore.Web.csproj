@@ -5,19 +5,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Controllers\"/>
+        <Folder Include="Controllers\" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="IdentityServer4" Version="4.1.1"/>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1"/>
+        <PackageReference Include="IdentityServer4" Version="4.1.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\AuthServer.Common\AuthServer.Common.csproj"/>
-        <ProjectReference Include="..\AuthServerEfCore.Configuration.DataLayer\AuthServerEfCore.Configuration.DataLayer.csproj"/>
-        <ProjectReference Include="..\AuthServerEfCore.DataLayer\AuthServerEfCore.DataLayer.csproj"/>
-        <ProjectReference Include="..\AuthServerEfCore.PersistedGrant.DataLayer\AuthServerEfCore.PersistedGrant.DataLayer.csproj"/>
+        <ProjectReference Include="..\AuthServer.Common\AuthServer.Common.csproj" />
+        <ProjectReference Include="..\AuthServerEfCore.Configuration.DataLayer\AuthServerEfCore.Configuration.DataLayer.csproj" />
+        <ProjectReference Include="..\AuthServerEfCore.DataLayer\AuthServerEfCore.DataLayer.csproj" />
+        <ProjectReference Include="..\AuthServerEfCore.PersistedGrant.DataLayer\AuthServerEfCore.PersistedGrant.DataLayer.csproj" />
     </ItemGroup>
 
 </Project>

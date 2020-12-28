@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  auth-server-efcore:
+    build:
+      context: src/AuthServerSamples
+      dockerfile: AuthServerEfCore.Web/Dockerfile
+    ports:
+      - 5000:5000
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
