@@ -49,7 +49,7 @@ namespace AuthServerEfCore.Web
                     {
                         var assembly = typeof(ConfigurationContext).Assembly.GetName().Name;
                         dbConfig.UseNpgsql(Configuration["Database:ConnectionStrings:Configuration"],
-                             npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
+                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
 
                         dbConfig.EnableDetailedErrors();
                         dbConfig.EnableSensitiveDataLogging();
@@ -86,12 +86,11 @@ namespace AuthServerEfCore.Web
 
             app.UseRouting();
 
+            app.UseIdentityServer();
+
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapDefaultControllerRoute();
-            });
+            app.UseEndpoints(endpoints => { endpoints.MapDefaultControllerRoute(); });
         }
     }
 }

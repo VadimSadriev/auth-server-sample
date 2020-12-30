@@ -8,6 +8,6 @@
 
         Configuration,
 
-        PersistenGrant
+        PersistedGrant
     }
 }

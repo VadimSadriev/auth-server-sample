@@ -16,6 +16,10 @@ namespace AuthServer.EfCoreMigrator
     {
         static async Task Main(string[] args)
         {
+            // "PersistedGrant": "server=localhost;database=persisted_grants;username=postgres;password=postgres",
+            // "Configuration": "server=localhost;database=configurations;username=postgres;password=postgres"
+
+            args = "--dbContext Main -c server=database;port=5432;database=users;username=postgres;password=postgres".Split(" ");
             var parseResult = Parser.Default.ParseArguments<CmdOptions>(args);
 
             await parseResult.WithParsedAsync(Migrate);
@@ -48,7 +52,7 @@ namespace AuthServer.EfCoreMigrator
                         opts.EnableSensitiveDataLogging();
                     });
                     break;
-                case Enums.DbContext.PersistenGrant:
+                case Enums.DbContext.PersistedGrant:
                     serviceCollection.AddDbContext<PersistedGrantContext>(opts =>
                     {
                         opts.UseNpgsql(cmdOptions.ConnectionString);

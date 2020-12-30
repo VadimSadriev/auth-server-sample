@@ -6,14 +6,12 @@ services:
       context: src/AuthServerSamples
       dockerfile: AuthServerEfCore.Web/Dockerfile
     depends_on:
-      - user-db
-      - configuration-db
-      - persisted-grant-db
+      - database
     ports:
       - 5000:5000
     environment:
       ASPNETCORE_ENVIRONMENT: "Development"
-  user-db:
+  database:
     image: postgres:13.1
     ports:
       - 5432:5432
@@ -21,28 +19,15 @@ services:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
     volumes:
-      - user-db:/var/lib/postgresql/data
+      - database:/var/lib/postgresql/data
 
-  configuration-db:
-    image: postgres:13.1
-    ports:
-      - 5433:5432
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    volumes:
-      - configuration-db:/var/lib/postgresql/data
-      
-  persisted-grant-db:
-    image: postgres:13.1
-    ports:
-      - 5434:5432
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    volumes:
-      - persisted-grant-db:/var/lib/postgresql/data
+#  migrator:
+#    depends_on:
+#      - "database"
+#    build:
+#      context: ./src/AuthServerSamples
+#      dockerfile: ./AuthServer.EfCoreMigrator/Dockerfile
+#    command:
+#      -- --dbContext ${DbContext} -c "host=database;port=5432;database=${DbName};username=postgres;password=postgres"
 volumes:
-  user-db:
-  configuration-db:
-  persisted-grant-db:
+  database:
