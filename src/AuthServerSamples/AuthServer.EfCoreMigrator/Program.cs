@@ -1,5 +1,4 @@
 ﻿using AuthServerEfCore.Application.Migrator;
-using AuthServerEfCore.Configuration.DataLayer;
 using AuthServerEfCore.DataLayer;
 using AuthServerEfCore.PersistedGrant.DataLayer;
 using CommandLine;

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AuthServerEfCore.Configuration.DataLayer.Configuration
+namespace AuthServerEfCore.DataLayer.ConfigurationEntityTypeConfiguration
 {
     /// <summary>
     /// Ef core configuration for <see cref="IdentityResourceProperty"/>

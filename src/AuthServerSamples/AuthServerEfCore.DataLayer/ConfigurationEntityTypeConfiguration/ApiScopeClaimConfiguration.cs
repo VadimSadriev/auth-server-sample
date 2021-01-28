@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AuthServerEfCore.Configuration.DataLayer.Configuration
+namespace AuthServerEfCore.DataLayer.ConfigurationEntityTypeConfiguration
 {
     /// <summary>
     /// EF core confugration for <see cref="ApiScopeClaim"/>

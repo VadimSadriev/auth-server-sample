@@ -46,8 +46,8 @@ namespace AuthServerEfCore.DataLayer.Core
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new ArgumentNullException($"Please provider connection string in appsettings.{Environment}.json file in order to create db context");
 
-            Console.WriteLine($"Окружение: {Environment}");
-            Console.WriteLine($"Создание {nameof(TContext)}. Строка подключения: {connectionString}");
+            Console.WriteLine($"Environment: {Environment}");
+            Console.WriteLine($"Creating {nameof(TContext)}. Connection string: {connectionString}");
 
             var optionsBuilder = new DbContextOptionsBuilder<TContext>();
 

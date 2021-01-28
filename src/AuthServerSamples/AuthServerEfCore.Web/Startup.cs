@@ -1,6 +1,5 @@
 using System;
 using AuthServer.Common.Logging;
-using AuthServerEfCore.Configuration.DataLayer;
 using AuthServerEfCore.DataLayer;
 using AuthServerEfCore.PersistedGrant.DataLayer;
 using IdentityServer4.EntityFramework.Interfaces;

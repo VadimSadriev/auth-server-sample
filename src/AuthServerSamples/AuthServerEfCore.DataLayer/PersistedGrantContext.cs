@@ -2,29 +2,29 @@
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthServerEfCore.Configuration.DataLayer
+namespace AuthServerEfCore.DataLayer
 {
     /// <summary>
-    /// Data context for operational data
+    /// Db context for operational data
     /// </summary>
-    public class ConfigurationContext : ConfigurationDbContext<ConfigurationContext>
+    public class PersistedGrantContext : PersistedGrantDbContext<PersistedGrantContext>
     {
         /// <summary>
-        /// <inheritdoc cref="ConfigurationContext"/>
+        /// <inheritdoc cref="PersistedGrantContext"/>
         /// </summary>
-        public ConfigurationContext(DbContextOptions<ConfigurationContext> options, ConfigurationStoreOptions storeOptions) : base(options, storeOptions)
+        public PersistedGrantContext(DbContextOptions<PersistedGrantContext> options, OperationalStoreOptions storeOptions) : base(options, storeOptions)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistedGrantContext).Assembly);
         }
 
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
-        }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
