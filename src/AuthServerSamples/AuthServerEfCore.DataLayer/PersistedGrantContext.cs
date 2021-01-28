@@ -1,4 +1,5 @@
-﻿using IdentityServer4.EntityFramework.DbContexts;
+﻿using AuthServerEfCore.DataLayer.PersistedGrantEntityTypeConfiguration;
+using IdentityServer4.EntityFramework.DbContexts;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +20,8 @@ namespace AuthServerEfCore.DataLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersistedGrantContext).Assembly);
+            modelBuilder.ApplyConfiguration(new DeviceFlowCodesConfiguration());
+            modelBuilder.ApplyConfiguration(new PersistedGrantConfiguration());
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ namespace AuthServerEfCore.DataLayer.ConfigurationEntityTypeConfiguration
     /// <summary>
     /// Ef core configuration for <see cref="IdentityResourceClaim"/>
     /// </summary>
-    public class IdentityResouceClaimConfiguration : IEntityTypeConfiguration<IdentityResourceClaim>
+    public class IdentityResourceClaimConfiguration : IEntityTypeConfiguration<IdentityResourceClaim>
     {
         /// <summary>
         /// <inheritdoc/>

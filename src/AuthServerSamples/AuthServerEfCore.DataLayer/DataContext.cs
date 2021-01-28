@@ -1,4 +1,6 @@
-﻿using AuthServerEfCore.Entities;
+﻿using System.Collections.Generic;
+using AuthServerEfCore.DataLayer.EntityTypeConfiguration;
+using AuthServerEfCore.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,7 +24,13 @@ namespace AuthServerEfCore.DataLayer
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
+            builder.ApplyConfiguration(new IdentityRoleClaimConfiguration());
+            builder.ApplyConfiguration(new IdentityUserClaimConfiguration());
+            builder.ApplyConfiguration(new IdentityUserLoginConfiguration());
+            builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
+            builder.ApplyConfiguration(new UserTokenConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -7,7 +7,7 @@ namespace AuthServerEfCore.DataLayer.EntityTypeConfiguration
     /// <summary>
     /// Ef core configuration for <see cref="Role"/>
     /// </summary>
-    public class RoleConfiguraration : IEntityTypeConfiguration<Role>
+    public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         /// <summary>
         /// <inheritdoc/>

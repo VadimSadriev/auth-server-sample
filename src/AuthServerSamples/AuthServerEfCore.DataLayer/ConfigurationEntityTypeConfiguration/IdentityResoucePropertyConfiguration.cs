@@ -7,7 +7,7 @@ namespace AuthServerEfCore.DataLayer.ConfigurationEntityTypeConfiguration
     /// <summary>
     /// Ef core configuration for <see cref="IdentityResourceProperty"/>
     /// </summary>
-    public class IdentityResoucePropertyConfiguration : IEntityTypeConfiguration<IdentityResourceProperty>
+    public class IdentityResourcePropertyConfiguration : IEntityTypeConfiguration<IdentityResourceProperty>
     {
         /// <summary>
         /// <inheritdoc/>

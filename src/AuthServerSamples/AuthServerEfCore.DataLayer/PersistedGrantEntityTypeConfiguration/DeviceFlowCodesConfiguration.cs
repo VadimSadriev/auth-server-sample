@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AuthServerEfCore.PersistedGrant.DataLayer.Configuration
+namespace AuthServerEfCore.DataLayer.PersistedGrantEntityTypeConfiguration
 {
     /// <summary>
     /// Ef core configuration for <see cref="DeviceFlowCodes"/>
