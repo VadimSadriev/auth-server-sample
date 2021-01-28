@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace AuthServerEfCore.DataLayer.Configuration
+namespace AuthServerEfCore.DataLayer.EntityTypeConfiguration
 {
     /// <summary>
     /// Ef core configuration for <see cref="IdentityUserRole{T}"/>
