@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.FileProviders;
 
-namespace AuthServerEfCore.DataLayer.Core
+namespace AuthServerEfCore.DataLayer.DesignTime
 {
     /// <summary>
     /// <inheritdoc cref="DesignTimeDbContextFactory{TContext}"/>

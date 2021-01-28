@@ -1,8 +1,7 @@
 ﻿using System.IO;
-using AuthServerEfCore.DataLayer.Core;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthServerEfCore.DataLayer
+namespace AuthServerEfCore.DataLayer.DesignTime
 {
     /// <summary>
     /// Design time factory for <see cref="DataContext"/>
