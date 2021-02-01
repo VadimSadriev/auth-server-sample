@@ -1,9 +1,7 @@
 using System;
 using AuthServer.Common.Logging;
 using AuthServerEfCore.DataLayer;
-using AuthServerEfCore.PersistedGrant.DataLayer;
 using IdentityServer4.EntityFramework.Interfaces;
-using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;

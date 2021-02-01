@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthServer.EfCoreMigrator",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServerEfCore.Application", "AuthServerEfCore.Application\AuthServerEfCore.Application.csproj", "{179FF692-03EE-4C37-9226-4038D0F081F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServerEfCore.Web.Common", "AuthServerEfCore.Web.Common\AuthServerEfCore.Web.Common.csproj", "{FD6197B8-9BDD-4111-9BBD-BEDC1B6B11B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,10 @@ Global
 		{179FF692-03EE-4C37-9226-4038D0F081F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{179FF692-03EE-4C37-9226-4038D0F081F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{179FF692-03EE-4C37-9226-4038D0F081F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD6197B8-9BDD-4111-9BBD-BEDC1B6B11B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD6197B8-9BDD-4111-9BBD-BEDC1B6B11B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD6197B8-9BDD-4111-9BBD-BEDC1B6B11B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD6197B8-9BDD-4111-9BBD-BEDC1B6B11B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{A14E13AD-A3C6-41D1-97BB-71E31BB8178D} = {D9E9CFE0-2B10-4302-B6AD-724274D50DD9}
 		{8007460E-08C1-410D-B14D-E750292DFD0C} = {E49FB83D-B897-4699-B6CC-7E5CEA91D981}
 		{179FF692-03EE-4C37-9226-4038D0F081F6} = {E49FB83D-B897-4699-B6CC-7E5CEA91D981}
+		{FD6197B8-9BDD-4111-9BBD-BEDC1B6B11B8} = {E49FB83D-B897-4699-B6CC-7E5CEA91D981}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {44F8ED28-94DB-484C-86DA-C4C4B0E04FBD}

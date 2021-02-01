@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthServerEfCore.Application\AuthServerEfCore.Application.csproj" />
+    <ProjectReference Include="..\AuthServerEfCore.Web\AuthServerEfCore.Web.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,14 @@
-﻿using AuthServerEfCore.Application.Migrator;
-using AuthServerEfCore.DataLayer;
-using AuthServerEfCore.PersistedGrant.DataLayer;
-using CommandLine;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthServer.Common.Configuration;
+using AuthServerEfCore.DataLayer;
+using CommandLine;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using AuthServerEfCore.Web.Common;
 
 namespace AuthServer.EfCoreMigrator
 {
@@ -15,61 +16,77 @@ namespace AuthServer.EfCoreMigrator
     {
         static async Task Main(string[] args)
         {
-            // "PersistedGrant": "server=localhost;database=persisted_grants;username=postgres;password=postgres",
-            // "Configuration": "server=localhost;database=configurations;username=postgres;password=postgres"
+            args = "-e Development".Split(" ");
 
-            args = "--dbContext Main -c server=database;port=5432;database=users;username=postgres;password=postgres".Split(" ");
             var parseResult = Parser.Default.ParseArguments<CmdOptions>(args);
 
-            await parseResult.WithParsedAsync(Migrate);
+            await parseResult.WithParsedAsync(MigrateAsync);
 
             await parseResult.WithNotParsedAsync(HandleErrors);
         }
 
-        static async Task Migrate(CmdOptions cmdOptions)
+        static async Task MigrateAsync(CmdOptions options)
         {
-            var serviceCollection = new ServiceCollection()
-                .AddScoped<IMigratorService, MigratorService>();
+            var environmentName = options.Environment;
 
-            // this is just for fast development.
-            // actual each database should have its own migrator
-            switch (cmdOptions.DbContext)
-            {
-                case Enums.DbContext.Main:
-                    serviceCollection.AddDbContext<DataContext>(opts =>
+            var configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{environmentName}.json")
+                .Build();
+
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddDbContext<DataContext>(configuration.GetSection("Database:ConnectionStrings:Users"));
+
+            serviceCollection
+                .AddIdentityServer()
+                .AddConfigurationStore<ConfigurationContext>(opts =>
+                {
+                    opts.ConfigureDbContext = dbConfig =>
                     {
-                        opts.UseNpgsql(cmdOptions.ConnectionString);
-                        opts.EnableDetailedErrors();
-                        opts.EnableSensitiveDataLogging();
-                    });
-                    break;
-                case Enums.DbContext.Configuration:
-                    serviceCollection.AddDbContext<ConfigurationContext>(opts =>
+                        var assembly = typeof(ConfigurationContext).Assembly.GetName().Name;
+                        dbConfig.UseNpgsql(configuration.GetSection("Database:ConnectionStrings:Configuration").EnsureExistence().Value,
+                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
+
+                        dbConfig.EnableDetailedErrors();
+                        dbConfig.EnableSensitiveDataLogging();
+                    };
+                })
+                .AddOperationalStore<PersistedGrantContext>(opts =>
+                {
+                    opts.ConfigureDbContext = dbConfig =>
                     {
-                        opts.UseNpgsql(cmdOptions.ConnectionString);
-                        opts.EnableDetailedErrors();
-                        opts.EnableSensitiveDataLogging();
-                    });
-                    break;
-                case Enums.DbContext.PersistedGrant:
-                    serviceCollection.AddDbContext<PersistedGrantContext>(opts =>
-                    {
-                        opts.UseNpgsql(cmdOptions.ConnectionString);
-                        opts.EnableDetailedErrors();
-                        opts.EnableSensitiveDataLogging();
-                    });
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(cmdOptions.DbContext));
-            }
+                        var assembly = typeof(PersistedGrantContext).Assembly.GetName().Name;
+
+                        dbConfig.UseNpgsql(configuration.GetSection("Database:ConnectionStrings:PersistedGrant").EnsureExistence().Value,
+                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
+
+                        dbConfig.EnableDetailedErrors();
+                        dbConfig.EnableSensitiveDataLogging();
+                    };
+                });
 
             var provider = serviceCollection.BuildServiceProvider();
 
             using var scope = provider.CreateScope();
 
-            var migratorService = scope.ServiceProvider.GetRequiredService<IMigratorService>();
+            var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
 
-            await migratorService.MigrateAsync();
+            Console.WriteLine($"Migrating {dataContext.GetType()}");
+            await dataContext.Database.MigrateAsync();
+            Console.WriteLine($"End migration {dataContext.GetType()}");
+
+            var configurationContext = scope.ServiceProvider.GetRequiredService<ConfigurationContext>();
+
+            Console.WriteLine($"Migrating {configurationContext.GetType()}");
+            await configurationContext.Database.MigrateAsync();
+            Console.WriteLine($"End migration {configurationContext.GetType()}");
+
+            var persistedGrantContext = scope.ServiceProvider.GetRequiredService<PersistedGrantContext>();
+
+            Console.WriteLine($"Migrating {persistedGrantContext.GetType()}");
+            await persistedGrantContext.Database.MigrateAsync();
+            Console.WriteLine($"End migration {persistedGrantContext.GetType()}");
         }
 
         static async Task HandleErrors(IEnumerable<Error> errors)
