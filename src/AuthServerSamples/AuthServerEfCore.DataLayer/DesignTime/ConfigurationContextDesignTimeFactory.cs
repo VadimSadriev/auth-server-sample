@@ -10,7 +10,7 @@ namespace AuthServerEfCore.DataLayer.DesignTime
     public class ConfigurationContextDesignTimeFactory : DesignTimeDbContextFactory<ConfigurationContext>
     {
         protected override string AppSettingsPath => $"{Directory.GetCurrentDirectory()}/../AuthServerEfCore.Web";
-        protected override string ConfigurationName => "Database:ConnectionStrings:Configuration";
+        protected override string ConfigurationName => "Database:ConnectionStrings:Auth";
 
         /// <summary>
         /// <inheritdoc />

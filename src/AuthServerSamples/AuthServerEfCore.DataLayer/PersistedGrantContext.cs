@@ -20,6 +20,7 @@ namespace AuthServerEfCore.DataLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema("persisted_grant");
             modelBuilder.ApplyConfiguration(new DeviceFlowCodesConfiguration());
             modelBuilder.ApplyConfiguration(new PersistedGrantConfiguration());
         }

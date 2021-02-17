@@ -10,7 +10,7 @@ namespace AuthServerEfCore.DataLayer.DesignTime
     public class PersistedGrantContextDesignTimeFactory : DesignTimeDbContextFactory<PersistedGrantContext>
     {
         protected override string AppSettingsPath => $"{Directory.GetCurrentDirectory()}/../AuthServerEfCore.Web";
-        protected override string ConfigurationName => "Database:ConnectionStrings:PersistedGrant";
+        protected override string ConfigurationName => "Database:ConnectionStrings:Auth";
 
         /// <summary>
         /// <inheritdoc />

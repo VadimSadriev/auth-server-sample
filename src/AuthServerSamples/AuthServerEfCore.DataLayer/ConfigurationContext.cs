@@ -23,6 +23,7 @@ namespace AuthServerEfCore.DataLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            modelBuilder.HasDefaultSchema("configuration");
             modelBuilder.ApplyConfiguration(new ApiResourceClaimConfiguration());
             modelBuilder.ApplyConfiguration(new ApiResourceConfiguration());
             modelBuilder.ApplyConfiguration(new ApiResourcePropertyConfiguration());
