@@ -1,6 +1,7 @@
 using System;
 using AuthServer.Common.Logging;
 using AuthServerEfCore.DataLayer;
+using AuthServerEfCore.Web.Common;
 using IdentityServer4.EntityFramework.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,35 +27,7 @@ namespace AuthServerEfCore.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddIdentityServer()
-                .AddOperationalStore<PersistedGrantContext>(opts =>
-                {
-                    opts.ConfigureDbContext = dbConfig =>
-                    {
-                        var assembly = typeof(PersistedGrantContext).Assembly.GetName().Name;
-
-                        dbConfig.UseNpgsql(Configuration["Database:ConnectionStrings:PersistedGrant"],
-                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
-
-                        dbConfig.EnableDetailedErrors();
-                        dbConfig.EnableSensitiveDataLogging();
-                    };
-                })
-                .AddConfigurationStore<ConfigurationContext>(opts =>
-                {
-                    opts.ConfigureDbContext = dbConfig =>
-                    {
-                        var assembly = typeof(ConfigurationContext).Assembly.GetName().Name;
-                        dbConfig.UseNpgsql(Configuration["Database:ConnectionStrings:Configuration"],
-                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
-
-                        dbConfig.EnableDetailedErrors();
-                        dbConfig.EnableSensitiveDataLogging();
-                    };
-                });
-
-            services.AddScoped<IPersistedGrantDbContext, PersistedGrantContext>();
-            services.AddScoped<IConfigurationDbContext, ConfigurationContext>();
+            services.AddIdentityServer(Configuration.GetSection("Database:ConnectionStrings:Auth"));
 
             services.AddDbContext<DataContext>(opts =>
             {

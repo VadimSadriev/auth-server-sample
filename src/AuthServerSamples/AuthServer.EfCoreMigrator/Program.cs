@@ -34,59 +34,15 @@ namespace AuthServer.EfCoreMigrator
                 .AddJsonFile($"appsettings.{environmentName}.json")
                 .Build();
 
+            var connectionStringSection = configuration.GetSection("Database:ConnectionStrings:Auth").EnsureExistence();
+            
             var serviceCollection = new ServiceCollection();
 
-            serviceCollection.AddDbContext<DataContext>(configuration.GetSection("Database:ConnectionStrings:Users"));
+            serviceCollection.AddDbContext<DataContext>(connectionStringSection);
 
-            serviceCollection
-                .AddIdentityServer()
-                .AddConfigurationStore<ConfigurationContext>(opts =>
-                {
-                    opts.ConfigureDbContext = dbConfig =>
-                    {
-                        var assembly = typeof(ConfigurationContext).Assembly.GetName().Name;
-                        dbConfig.UseNpgsql(configuration.GetSection("Database:ConnectionStrings:Configuration").EnsureExistence().Value,
-                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
-
-                        dbConfig.EnableDetailedErrors();
-                        dbConfig.EnableSensitiveDataLogging();
-                    };
-                })
-                .AddOperationalStore<PersistedGrantContext>(opts =>
-                {
-                    opts.ConfigureDbContext = dbConfig =>
-                    {
-                        var assembly = typeof(PersistedGrantContext).Assembly.GetName().Name;
-
-                        dbConfig.UseNpgsql(configuration.GetSection("Database:ConnectionStrings:PersistedGrant").EnsureExistence().Value,
-                            npgsqlOpts => npgsqlOpts.MigrationsAssembly(assembly));
-
-                        dbConfig.EnableDetailedErrors();
-                        dbConfig.EnableSensitiveDataLogging();
-                    };
-                });
+            serviceCollection.AddIdentityServer(connectionStringSection);
 
             var provider = serviceCollection.BuildServiceProvider();
-
-            using var scope = provider.CreateScope();
-
-            var dataContext = scope.ServiceProvider.GetRequiredService<DataContext>();
-
-            Console.WriteLine($"Migrating {dataContext.GetType()}");
-            await dataContext.Database.MigrateAsync();
-            Console.WriteLine($"End migration {dataContext.GetType()}");
-
-            var configurationContext = scope.ServiceProvider.GetRequiredService<ConfigurationContext>();
-
-            Console.WriteLine($"Migrating {configurationContext.GetType()}");
-            await configurationContext.Database.MigrateAsync();
-            Console.WriteLine($"End migration {configurationContext.GetType()}");
-
-            var persistedGrantContext = scope.ServiceProvider.GetRequiredService<PersistedGrantContext>();
-
-            Console.WriteLine($"Migrating {persistedGrantContext.GetType()}");
-            await persistedGrantContext.Database.MigrateAsync();
-            Console.WriteLine($"End migration {persistedGrantContext.GetType()}");
         }
 
         static async Task HandleErrors(IEnumerable<Error> errors)

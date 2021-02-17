@@ -1,7 +1,10 @@
 ﻿using AuthServer.Common.Configuration;
+using AuthServerEfCore.DataLayer;
+using IdentityServer4.EntityFramework.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace AuthServerEfCore.Web.Common
 {
@@ -27,6 +30,42 @@ namespace AuthServerEfCore.Web.Common
                 opts.EnableSensitiveDataLogging();
                 opts.EnableDetailedErrors();
             });
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds identity server services to DI
+        /// </summary>
+        public static IServiceCollection AddIdentityServer(this IServiceCollection services, IConfigurationSection dbConnectionStringSection)
+        {
+            var connectionString = dbConnectionStringSection.EnsureExistence().Value;
+
+            services.AddIdentityServer()
+                .AddOperationalStore<PersistedGrantContext>(opts =>
+                {
+                    opts.ConfigureDbContext = dbConfig =>
+                    {
+                        dbConfig.UseNpgsql(connectionString);
+
+                        dbConfig.EnableDetailedErrors();
+                        dbConfig.EnableSensitiveDataLogging();
+                    };
+                })
+                .AddConfigurationStore<ConfigurationContext>(opts =>
+                {
+                    opts.ConfigureDbContext = dbConfig =>
+                    {
+                        dbConfig.UseNpgsql(connectionString);
+
+                        dbConfig.EnableDetailedErrors();
+                        dbConfig.EnableSensitiveDataLogging();
+                    };
+                });
+
+            ;
+            services.Replace(ServiceDescriptor.Scoped<IPersistedGrantDbContext, PersistedGrantContext>());
+            services.Replace(ServiceDescriptor.Scoped<IConfigurationDbContext, ConfigurationContext>());
 
             return services;
         }
