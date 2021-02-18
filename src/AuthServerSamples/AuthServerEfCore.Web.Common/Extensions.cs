@@ -1,6 +1,8 @@
 ﻿using AuthServer.Common.Configuration;
 using AuthServerEfCore.DataLayer;
+using AuthServerEfCore.Entities;
 using IdentityServer4.EntityFramework.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -66,6 +68,25 @@ namespace AuthServerEfCore.Web.Common
             ;
             services.Replace(ServiceDescriptor.Scoped<IPersistedGrantDbContext, PersistedGrantContext>());
             services.Replace(ServiceDescriptor.Scoped<IConfigurationDbContext, ConfigurationContext>());
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds identity services to Di such as User Manager etc
+        /// </summary>
+        public static IServiceCollection AddIdentity(this IServiceCollection services)
+        {
+            services.AddIdentity<User, Role>(opts =>
+                {
+                    // TODO: Move to configuration
+                    opts.Password.RequiredLength = 4;
+                    opts.Password.RequireDigit = false;
+                    opts.Password.RequireNonAlphanumeric = false;
+                    opts.Password.RequireUppercase = false;
+                })
+                .AddEntityFrameworkStores<DataContext>()
+                .AddDefaultTokenProviders();
 
             return services;
         }

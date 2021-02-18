@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuthServer.Common.Configuration;
+using AuthServerEfCore.Application.Migrator;
 using AuthServerEfCore.DataLayer;
 using CommandLine;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +36,7 @@ namespace AuthServer.EfCoreMigrator
                 .Build();
 
             var connectionStringSection = configuration.GetSection("Database:ConnectionStrings:Auth").EnsureExistence();
-            
+
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddDbContext<DataContext>(connectionStringSection);
@@ -43,6 +44,14 @@ namespace AuthServer.EfCoreMigrator
             serviceCollection.AddIdentityServer(connectionStringSection);
 
             var provider = serviceCollection.BuildServiceProvider();
+
+            using var scope = provider.CreateScope();
+
+            var migratorService = scope.ServiceProvider.GetRequiredService<IMigratorService>();
+
+            await migratorService.MigrateAsync();
+
+            await migratorService.SeedAsync();
         }
 
         static async Task HandleErrors(IEnumerable<Error> errors)

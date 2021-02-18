@@ -3,15 +3,10 @@
 namespace AuthServerEfCore.Application.Migrator
 {
     /// <summary>
-    /// Service for database migrations
+    /// Service for seeding database 
     /// </summary>
-    public interface IMigratorService
+    public interface ISeeder
     {
-        /// <summary>
-        /// Migrates database
-        /// </summary>
-        Task MigrateAsync();
-
         /// <summary>
         /// Seeds database
         /// </summary>
