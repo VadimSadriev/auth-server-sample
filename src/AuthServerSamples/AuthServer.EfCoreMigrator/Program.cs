@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AuthServer.Common.Configuration;
+using AuthServerEfCore.Application;
 using AuthServerEfCore.Application.Migrator;
 using AuthServerEfCore.DataLayer;
 using CommandLine;
@@ -40,7 +41,8 @@ namespace AuthServer.EfCoreMigrator
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddDbContext<DataContext>(connectionStringSection);
-
+            serviceCollection.AddApplication();
+            serviceCollection.AddIdentity();
             serviceCollection.AddIdentityServer(connectionStringSection);
 
             var provider = serviceCollection.BuildServiceProvider();

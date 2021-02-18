@@ -44,6 +44,7 @@ namespace AuthServerEfCore.Web.Common
             var connectionString = dbConnectionStringSection.EnsureExistence().Value;
 
             services.AddIdentityServer()
+                .AddAspNetIdentity<User>()
                 .AddOperationalStore<PersistedGrantContext>(opts =>
                 {
                     opts.ConfigureDbContext = dbConfig =>

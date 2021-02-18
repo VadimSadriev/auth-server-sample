@@ -55,8 +55,8 @@ namespace AuthServerEfCore.Application.Migrator
         public async Task SeedAsync()
         {
             await using var useTransaction = await _context.Database.BeginTransactionAsync();
-            await using var configTransaction = await _context.Database.BeginTransactionAsync();
-            await using var persistedGrantTransaction = await _context.Database.BeginTransactionAsync();
+            await using var configTransaction = await _configurationContext.Database.BeginTransactionAsync();
+            await using var persistedGrantTransaction = await _persistedGrantContext.Database.BeginTransactionAsync();
 
             Console.WriteLine($"{DateTime.Now:HH:mm:ss} Running seeders...");
 

@@ -1,5 +1,6 @@
 using System;
 using AuthServer.Common.Logging;
+using AuthServerEfCore.Application;
 using AuthServerEfCore.DataLayer;
 using AuthServerEfCore.Web.Common;
 using IdentityServer4.EntityFramework.Interfaces;
@@ -30,14 +31,11 @@ namespace AuthServerEfCore.Web
             services.AddIdentity();
             services.AddIdentityServer(Configuration.GetSection("Database:ConnectionStrings:Auth"));
 
-            services.AddDbContext<DataContext>(opts =>
-            {
-                opts.UseNpgsql(Configuration["Database:ConnectionStrings:Users"]);
-                opts.EnableDetailedErrors();
-                opts.EnableSensitiveDataLogging();
-            });
+            services.AddDbContext<DataContext>(Configuration.GetSection("Database:ConnectionStrings:Auth"));
+            services.AddApplication();
+            services.AddAuthentication();
 
-            services.AddSerilog(Configuration);
+            services.AddSerilog(Configuration.GetSection("Logging"));
             services.AddControllersWithViews();
         }
 

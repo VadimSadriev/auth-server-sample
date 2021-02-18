@@ -5,7 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AuthServer.Common\AuthServer.Common.csproj" />
+        <PackageReference Include="IdentityServer4.AspNetIdentity" Version="4.1.1" />
+        <ProjectReference Include="..\AuthServer.Common\AuthServer.Common.csproj" />
       <ProjectReference Include="..\AuthServerEfCore.Application\AuthServerEfCore.Application.csproj" />
     </ItemGroup>
 

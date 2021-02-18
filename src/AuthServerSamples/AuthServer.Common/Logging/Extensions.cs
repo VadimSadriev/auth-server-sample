@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AuthServer.Common.Configuration;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -14,14 +15,14 @@ namespace AuthServer.Common.Logging
         /// <summary>
         /// Replaces all logging providers with serilog logging provider
         /// </summary>
-        public static IServiceCollection AddSerilog(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSerilog(this IServiceCollection services, IConfigurationSection loggingSection)
         {
             return services.AddLogging(builder =>
              {
                  builder.ClearProviders();
                  builder.AddSerilog(
                      new LoggerConfiguration()
-                     .ReadFrom.Configuration(configuration.GetSection("Logging"))
+                     .ReadFrom.Configuration(loggingSection.EnsureExistence())
                      .Enrich.WithExceptionDetails()
                      .CreateLogger());
              });
