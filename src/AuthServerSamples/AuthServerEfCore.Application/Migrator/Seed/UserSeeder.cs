@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AuthServerEfCore.DataLayer;
 using AuthServerEfCore.Entities;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthServerEfCore.Application.Migrator.Seed
 {
@@ -16,14 +17,16 @@ namespace AuthServerEfCore.Application.Migrator.Seed
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly DataContext _context;
 
         /// <summary>
         /// <inheritdoc cref="UserSeeder"/>
         /// </summary>
-        public UserSeeder(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public UserSeeder(UserManager<User> userManager, RoleManager<Role> roleManager, DataContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         /// <summary>
@@ -36,6 +39,9 @@ namespace AuthServerEfCore.Application.Migrator.Seed
             foreach (var userData in usersData)
             {
                 var user = userData.User;
+
+                if (await _context.Users.AnyAsync(x => x.NormalizedUserName == user.UserName.ToUpper() || x.NormalizedEmail == user.Email.ToUpper()))
+                    continue;
 
                 // User creation
                 var userCreateResult = await _userManager.CreateAsync(user, userData.Password);
