@@ -5,7 +5,7 @@ const OptimizeAssetsCssPlugin = require('optimize-css-assets-webpack-plugin')
 
 module.exports = {
     entry: {
-        main: './wwwroot/index.js'
+        style: './wwwroot/index.js'
     },
     output: {
         filename: '[name].bundle.js',

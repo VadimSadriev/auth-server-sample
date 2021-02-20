@@ -14,9 +14,15 @@ namespace AuthServerEfCore.Web.Controllers
         /// Returns login view
         /// </summary>
         [HttpGet("login")]
-        public async Task<IActionResult> Login([FromRoute] string returnUrl)
+        public async Task<IActionResult> Login([FromQuery] string returnUrl)
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> Login()
+        {
+            return View();
         }
     }
 }

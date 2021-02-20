@@ -1,3 +1,32 @@
 ﻿@model AuthServerEfCore.Web.Models.Login.LoginViewModel
 
-<p> Hi from login. This is your return url: @Model.ReturnUrl </p>
+<div class="row">
+    <div class="col-md-4 offset-md-4">
+        <form asp-controller="auth" asp-action="login" method="post">
+            <!-- login card -->
+            <div class="card">
+                <!-- card header -->
+                <div class="card-header text-center">
+                    Login with user name or email
+                </div>
+                <!-- card body -->
+                <div class="card-body">
+                    <div class="mb-3 text-center">
+                        <label for="user-name-or-email-input" class="form-label">User name or Email</label>
+                        <input type="text" class="form-control" id="user-name-or-email-input">
+                    </div>
+                    <div class="mb-3 text-center">
+                        <label for="password-input" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password-input">
+                    </div>
+                </div>
+                <!-- card footer -->
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-outline-primary">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
