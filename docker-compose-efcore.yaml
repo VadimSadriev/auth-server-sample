@@ -14,20 +14,20 @@ services:
   database:
     image: postgres:13.1
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "postgres"
     volumes:
       - database:/var/lib/postgresql/data
 
-#  migrator:
-#    depends_on:
-#      - "database"
-#    build:
-#      context: ./src/AuthServerSamples
-#      dockerfile: ./AuthServer.EfCoreMigrator/Dockerfile
-#    command:
-#      -- --dbContext ${DbContext} -c "host=database;port=5432;database=${DbName};username=postgres;password=postgres"
+  migrator:
+    depends_on:
+      - database
+    build:
+      context: ./src/AuthServerSamples
+      dockerfile: ./AuthServer.EfCoreMigrator/Dockerfile
+    command:
+      -- -e Development
 volumes:
   database:

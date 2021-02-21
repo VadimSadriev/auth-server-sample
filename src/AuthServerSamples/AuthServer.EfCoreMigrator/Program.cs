@@ -6,11 +6,10 @@ using AuthServer.Common.Configuration;
 using AuthServerEfCore.Application;
 using AuthServerEfCore.Application.Migrator;
 using AuthServerEfCore.DataLayer;
+using AuthServerEfCore.Web.Common;
 using CommandLine;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using AuthServerEfCore.Web.Common;
 
 namespace AuthServer.EfCoreMigrator
 {
@@ -18,8 +17,6 @@ namespace AuthServer.EfCoreMigrator
     {
         static async Task Main(string[] args)
         {
-            args = "-e Development".Split(" ");
-
             var parseResult = Parser.Default.ParseArguments<CmdOptions>(args);
 
             await parseResult.WithParsedAsync(MigrateAsync);
