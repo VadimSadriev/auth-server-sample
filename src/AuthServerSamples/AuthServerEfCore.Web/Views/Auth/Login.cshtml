@@ -3,21 +3,22 @@
 <div class="row">
     <div class="col-md-4 offset-md-4">
         <form asp-controller="auth" asp-action="login" method="post">
+            <input type="hidden" asp-for="ReturnUrl"/>
             <!-- login card -->
             <div class="card">
                 <!-- card header -->
                 <div class="card-header text-center">
-                    Login with user name or email
+                    Login with user name
                 </div>
                 <!-- card body -->
                 <div class="card-body">
                     <div class="mb-3 text-center">
-                        <label for="user-name-or-email-input" class="form-label">User name or Email</label>
-                        <input type="text" class="form-control" id="user-name-or-email-input">
+                        <label for="user-name-input" class="form-label">User name</label>
+                        <input type="text" class="form-control" id="user-name-input" asp-for="UserName">
                     </div>
                     <div class="mb-3 text-center">
                         <label for="password-input" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password-input">
+                        <input type="password" class="form-control" id="password-input" asp-for="Password">
                     </div>
                 </div>
                 <!-- card footer -->
