@@ -44,6 +44,7 @@ namespace AuthServerEfCore.Web.Common
             var connectionString = dbConnectionStringSection.EnsureExistence().Value;
 
             services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
                 .AddAspNetIdentity<User>()
                 .AddOperationalStore<PersistedGrantContext>(opts =>
                 {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AuthServerEfCore.DataLayer;
+using IdentityModel;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
 
@@ -62,7 +63,26 @@ namespace AuthServerEfCore.Application.Migrator.Seed
         /// </summary>
         private IList<Client> GetClients()
         {
-            return new List<Client>();
+            return new List<Client>
+            {
+                new Client
+                {
+                    ClientId = "client_id_mvc",
+                    ClientSecrets = { new Secret("client_secret_mvc".ToSha256()) },
+                    AllowedGrantTypes = GrantTypes.Code,
+                    AllowedScopes =
+                    {
+                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
+                    },
+
+                    RequirePkce = true,
+
+                    PostLogoutRedirectUris = { "http://localhost:5002/home/index" },
+                    RedirectUris = { "http://localhost:5002/signin-oidc" },
+                    AllowOfflineAccess = true
+                }
+            };
         }
 
         /// <summary>
@@ -78,7 +98,11 @@ namespace AuthServerEfCore.Application.Migrator.Seed
         /// </summary>
         private IList<IdentityResource> GetIdentityResources()
         {
-            return new List<IdentityResource>();
+            return new List<IdentityResource>
+            {
+                new IdentityResources.OpenId(),
+                new IdentityResources.Profile(),
+            };
         }
 
         /// <summary>

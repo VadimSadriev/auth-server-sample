@@ -6,6 +6,7 @@ using AuthServerEfCore.Web.Common;
 using IdentityServer4.EntityFramework.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,12 @@ namespace AuthServerEfCore.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentity();
+            services.ConfigureApplicationCookie(opts =>
+            {
+                opts.Cookie.Name = "IdentityServer.Cookie";
+                opts.LoginPath = "/auth/login";
+                opts.LogoutPath = "/auth/logout";
+            });
             services.AddIdentityServer(Configuration.GetSection("Database:ConnectionStrings:Auth"));
 
             services.AddDbContext<DataContext>(Configuration.GetSection("Database:ConnectionStrings:Auth"));
@@ -51,6 +58,7 @@ namespace AuthServerEfCore.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax});
             app.UseStaticFiles();
 
             app.UseRouting();
