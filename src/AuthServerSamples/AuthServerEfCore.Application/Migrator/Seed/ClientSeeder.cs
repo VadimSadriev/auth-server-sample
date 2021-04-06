@@ -81,6 +81,13 @@ namespace AuthServerEfCore.Application.Migrator.Seed
                     PostLogoutRedirectUris = { "http://localhost:5002/home/index" },
                     RedirectUris = { "http://localhost:5002/signin-oidc" },
                     AllowOfflineAccess = true
+                },
+                new Client
+                {
+                    ClientId = "consumer_api",
+                    ClientSecrets = new List<Secret> { new Secret("consumer_api_secret".ToSha256()) },
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedScopes = { "ApiOne" }
                 }
             };
         }

@@ -1,7 +1,13 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
+using AuthServer.Common.Extensions;
 using AuthServer.Common.Http.Exceptions;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace AuthServer.Common.Http
 {
@@ -10,7 +16,9 @@ namespace AuthServer.Common.Http
         where TSerializer : ISerializer
     {
         private readonly TSerializer _serializer;
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient HttpClient;
+
+        private static ConcurrentDictionary<Type, IEnumerable<PropertyInfo>> _typePropertyInfosDic = new();
 
         /// <inheritdoc cref="ApiClient{TSerializer}"/>
         public ApiClient(
@@ -19,14 +27,13 @@ namespace AuthServer.Common.Http
         )
         {
             _serializer = serializer;
-            _httpClient = httpClient;
+            HttpClient = httpClient;
         }
-
         /// <inheritdoc />
         public async Task<TResponse?> SendAsync<TRequest, TResponse>(TRequest? request, HttpMethod httpMethod, string uri)
         {
             if (httpMethod == HttpMethod.Get)
-                uri = SerializeRequestToUri(request, uri);
+                uri = SerializeRequestModelToUri(request, uri);
 
             var requestMessage = new HttpRequestMessage
             {
@@ -34,12 +41,12 @@ namespace AuthServer.Common.Http
                 RequestUri = new Uri(uri)
             };
 
-            if (request != null)
+            if (request != null && httpMethod != HttpMethod.Get)
                 await _serializer.SerializeAsync(request, requestMessage);
 
             try
             {
-                var responseMessage = await _httpClient.SendAsync(requestMessage);
+                var responseMessage = await HttpClient.SendAsync(requestMessage);
 
                 var response = await _serializer.DeserializeAsync<TResponse>(responseMessage);
 
@@ -51,9 +58,43 @@ namespace AuthServer.Common.Http
             }
         }
 
-        private string SerializeRequestToUri<TRequest>(TRequest request, string uri)
+        /// <summary>
+        /// Serializes model to uri paramters
+        /// </summary>
+        private string SerializeRequestModelToUri<TRequest>(TRequest request, string uri)
         {
-            return default;
+            var queryParameters = new List<KeyValuePair<string, string?>>();
+
+            var requestType = typeof(TRequest);
+
+            var requestProperties = _typePropertyInfosDic.GetOrAdd(requestType, type => type.GetProperties());
+
+            foreach (var requestProperty in requestProperties)
+            {
+                var propValue = requestProperty.GetValue(request);
+
+                if (propValue == null)
+                    continue;
+
+                if (requestProperty.IsEnumerable())
+                {
+                    var enumerable = (IEnumerable)propValue;
+
+                    foreach (var item in enumerable)
+                    {
+                        queryParameters.Add(new KeyValuePair<string, string?>(requestProperty.Name, item.ToString()!));
+                    }
+
+                    continue;
+                }
+
+                if (requestProperty.IsClass())
+                    continue;
+
+                queryParameters.Add(new KeyValuePair<string, string?>(requestProperty.Name, propValue.ToString()!));
+            }
+
+            return QueryHelpers.AddQueryString(uri, queryParameters);
         }
     }
 }
