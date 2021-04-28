@@ -66,8 +66,7 @@ namespace AuthServerEfCore.Web.Common
                         dbConfig.EnableSensitiveDataLogging();
                     };
                 });
-
-            ;
+            
             services.Replace(ServiceDescriptor.Scoped<IPersistedGrantDbContext, PersistedGrantContext>());
             services.Replace(ServiceDescriptor.Scoped<IConfigurationDbContext, ConfigurationContext>());
 

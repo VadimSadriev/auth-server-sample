@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcClient", "MvcClient\MvcC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer.Api", "Consumer.Api\Consumer.Api.csproj", "{2089873C-6446-4E9B-9B48-3F1CBFCDC956}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthServer.Common.UnitTests", "AuthServer.Common.UnitTests\AuthServer.Common.UnitTests.csproj", "{21671EB2-F846-4332-AFE8-030EC0C8D538}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{2089873C-6446-4E9B-9B48-3F1CBFCDC956}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2089873C-6446-4E9B-9B48-3F1CBFCDC956}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2089873C-6446-4E9B-9B48-3F1CBFCDC956}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21671EB2-F846-4332-AFE8-030EC0C8D538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21671EB2-F846-4332-AFE8-030EC0C8D538}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21671EB2-F846-4332-AFE8-030EC0C8D538}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21671EB2-F846-4332-AFE8-030EC0C8D538}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
