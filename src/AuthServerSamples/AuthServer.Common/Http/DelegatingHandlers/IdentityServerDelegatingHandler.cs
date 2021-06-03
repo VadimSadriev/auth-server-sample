@@ -1,6 +1,8 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using AuthServer.Common.Http.Clients.Identity;
+using IdentityModel.Client;
 
 namespace AuthServer.Common.Http.DelegatingHandlers
 {
@@ -22,12 +24,14 @@ namespace AuthServer.Common.Http.DelegatingHandlers
         protected override async Task AuthorizeAsync(HttpRequestMessage httpRequestMessage)
         {
             _accessToken ??= await _identityApiClient.GetAccessTokenAsync();
+            httpRequestMessage.SetBearerToken(_accessToken);
         }
 
         /// <inheritdoc />
         protected override async Task OnUnauthorizedAsync(HttpRequestMessage httpRequestMessage, HttpResponseMessage httpResponseMessage)
         {
             _accessToken = await _identityApiClient.GetAccessTokenAsync();
+            httpRequestMessage.SetBearerToken(_accessToken);
         }
     }
 }

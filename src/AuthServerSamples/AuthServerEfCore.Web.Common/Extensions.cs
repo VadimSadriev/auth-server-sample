@@ -1,4 +1,5 @@
 ﻿using AuthServer.Common.Configuration;
+using AuthServer.Common.Http.Clients.Identity;
 using AuthServerEfCore.DataLayer;
 using AuthServerEfCore.Entities;
 using IdentityServer4.EntityFramework.Interfaces;

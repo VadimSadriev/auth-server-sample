@@ -1,5 +1,7 @@
 ﻿using AuthServer.Common.Http.Clients;
 using AuthServer.Common.Http.Clients.Identity;
+using AuthServer.Common.Http.DelegatingHandlers;
+using AuthServer.Common.Http.Serializers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -28,6 +30,8 @@ namespace AuthServer.Common.Http
         public static IServiceCollection AddDefaultApiClients(this IServiceCollection services)
         {
             services.TryAddScoped<IJsonApiClient, JsonApiClient>();
+            
+            services.TryAddScoped<JsonModelSerializer>();
 
             return services;
         }
@@ -38,6 +42,7 @@ namespace AuthServer.Common.Http
         public static IServiceCollection AddIdentityApiClient(this IServiceCollection services, IConfigurationSection identitySeverConfigurationSection)
         {
             services.Configure<IdentityConfiguration>(identitySeverConfigurationSection);
+            services.AddScoped<IdentityServerDelegatingHandler>();
 
             services.AddHttpClient<IIdentityApiClient, IdentityApiClient>()
                 .AddTypedClient<IIdentityApiClient, IdentityApiClient>();

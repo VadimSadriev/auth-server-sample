@@ -1,4 +1,5 @@
-﻿namespace AuthServer.Common.Http.Clients.Identity
+﻿#pragma warning disable 8618
+namespace AuthServer.Common.Http.Clients.Identity
 {
     /// <summary>
     /// Configuration for identity server

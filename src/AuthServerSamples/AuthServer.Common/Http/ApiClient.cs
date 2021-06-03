@@ -38,7 +38,7 @@ namespace AuthServer.Common.Http
             var requestMessage = new HttpRequestMessage
             {
                 Method = httpMethod,
-                RequestUri = new Uri(uri)
+                RequestUri = new Uri(uri, UriKind.RelativeOrAbsolute)
             };
 
             if (request != null && httpMethod != HttpMethod.Get)
@@ -47,6 +47,8 @@ namespace AuthServer.Common.Http
             try
             {
                 var responseMessage = await HttpClient.SendAsync(requestMessage);
+
+                responseMessage.EnsureSuccessStatusCode();
 
                 var response = await _serializer.DeserializeAsync<TResponse>(responseMessage);
 

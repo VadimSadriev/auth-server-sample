@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AuthServerEfCore.Configuration.DataLayer\AuthServerEfCore.Configuration.DataLayer.csproj" />
     <ProjectReference Include="..\AuthServerEfCore.DataLayer\AuthServerEfCore.DataLayer.csproj" />
-    <ProjectReference Include="..\AuthServerEfCore.PersistedGrant.DataLayer\AuthServerEfCore.PersistedGrant.DataLayer.csproj" />
   </ItemGroup>
 
 </Project>

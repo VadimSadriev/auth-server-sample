@@ -17,6 +17,8 @@ namespace AuthServer.EfCoreMigrator
     {
         static async Task Main(string[] args)
         {
+            args = "-e Development".Split(" ");
+
             var parseResult = Parser.Default.ParseArguments<CmdOptions>(args);
 
             await parseResult.WithParsedAsync(MigrateAsync);

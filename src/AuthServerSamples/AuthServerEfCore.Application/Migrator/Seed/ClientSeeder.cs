@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AuthServerEfCore.DataLayer;
 using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.EntityFramework.Mappers;
 using IdentityServer4.Models;
 
@@ -72,8 +73,8 @@ namespace AuthServerEfCore.Application.Migrator.Seed
                     AllowedGrantTypes = GrantTypes.Code,
                     AllowedScopes =
                     {
-                        IdentityServer4.IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServer4.IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
                     },
 
                     RequirePkce = true,
@@ -87,7 +88,12 @@ namespace AuthServerEfCore.Application.Migrator.Seed
                     ClientId = "consumer_api",
                     ClientSecrets = new List<Secret> { new Secret("consumer_api_secret".ToSha256()) },
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    AllowedScopes = { "ApiOne" }
+                    AllowedScopes = { "OrderApi", "read", "rc.scope" },
+                    Claims = new List<ClientClaim>
+                    {
+                        new ClientClaim("server.character", "Xayah"),
+                        new ClientClaim("orderapi.claim", "apiclaim"),
+                    }
                 }
             };
         }
@@ -97,7 +103,11 @@ namespace AuthServerEfCore.Application.Migrator.Seed
         /// </summary>
         private IList<ApiScope> GetApiScopes()
         {
-            return new List<ApiScope>();
+            return new List<ApiScope>
+            {
+                new ApiScope("OrderApi", new []{ " orderapi.claim"}),
+                new ApiScope("read"),
+            };
         }
 
         /// <summary>
@@ -109,6 +119,11 @@ namespace AuthServerEfCore.Application.Migrator.Seed
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource
+                {
+                    Name = "rc.scope",
+                    UserClaims = { "server.character" }
+                }
             };
         }
 

@@ -1,4 +1,5 @@
 using AuthServer.Common.Http;
+using AuthServer.Common.Serialization;
 using Consumer.Api.External;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,9 +22,13 @@ namespace Consumer.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDefaultApiClients();
+            services.AddSingleton<IJsonSerializer, JsonSerializer>();
+            
             services.AddIdentityApiClient(Configuration.GetSection("IdentityServer"));
 
-            services.AddOrderApiClient(Configuration.GetSection("OrderApiClient"));
+            services.AddOrderApiClient(Configuration.GetSection("OrderApi"));
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddControllers();
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Consumer.Api", Version = "v1" }); });

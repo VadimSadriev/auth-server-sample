@@ -19,8 +19,8 @@ namespace Consumer.Api.External.ApiClients.Order
             IOptions<OrderApiConfiguration> options)
             : base(serializer, httpClient)
         {
-            httpClient.BaseAddress = new Uri(_options.Value.Endpoint);
             _options = options;
+            httpClient.BaseAddress = new Uri(_options.Value.Endpoint);
         }
     }
 }

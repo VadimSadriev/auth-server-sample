@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AuthServerEfCore.Entities;
 using AuthServerEfCore.Web.Models.Login;
+using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

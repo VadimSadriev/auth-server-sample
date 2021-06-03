@@ -20,6 +20,7 @@ namespace Ordering.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderById([FromRoute] long id)
         {
+            var user = User;
             var order = await _orderService.GetOrderById(id);
 
             if (order == default)

@@ -24,7 +24,7 @@ namespace AuthServer.Common.Http.Clients.Identity
         }
 
         /// <inheritdoc />
-        public async Task<string> GetAccessTokenAsync()
+        public async Task<string>  GetAccessTokenAsync()
         {
             var discoveryDocument = await HttpClient.GetDiscoveryDocumentAsync(_options.Value.Authority);
 
