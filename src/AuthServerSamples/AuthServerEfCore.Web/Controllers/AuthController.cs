@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AuthServerEfCore.Entities;
 using AuthServerEfCore.Web.Models.Login;
+using IdentityServer4.Services;
 using IdentityServer4.Stores;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +16,16 @@ namespace AuthServerEfCore.Web.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IIdentityServerInteractionService _interactionService; 
 
         /// <summary>
         /// <inheritdoc cref="AuthController"/>
         /// </summary>
-        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AuthController(UserManager<User> userManager, SignInManager<User> signInManager, IIdentityServerInteractionService interactionService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _interactionService = interactionService;
         }
 
         /// <summary>
@@ -32,6 +35,21 @@ namespace AuthServerEfCore.Web.Controllers
         public async Task<IActionResult> Login([FromQuery] string returnUrl)
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
+        }
+        
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout(string logoutId)
+        {
+            await _signInManager.SignOutAsync();
+
+            var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
+
+            if (string.IsNullOrEmpty(logoutRequest.PostLogoutRedirectUri))
+            {
+                return Redirect("http://localhost:3000");
+            }
+
+            return Redirect(logoutRequest.PostLogoutRedirectUri);
         }
 
         /// <summary>

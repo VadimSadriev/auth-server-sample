@@ -61,6 +61,13 @@ namespace AuthServerEfCore.Web
 
             app.UseRouting();
 
+            app.UseCors(x =>
+            {
+                x.AllowAnyHeader();
+                x.AllowAnyMethod();
+                x.AllowAnyOrigin();
+            });
+
             app.UseIdentityServer();
 
             app.UseAuthorization();

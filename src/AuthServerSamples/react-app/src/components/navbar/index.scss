@@ -1,0 +1,12 @@
+.main-nav-bar{
+    display: flex;
+    justify-content: space-between;
+    line-height: 46px;
+    border: 0;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: none;
+
+    & .ant-menu-horizontal{
+        border-bottom: none;
+    }
+}

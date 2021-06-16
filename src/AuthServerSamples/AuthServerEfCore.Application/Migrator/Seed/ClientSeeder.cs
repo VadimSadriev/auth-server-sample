@@ -94,6 +94,20 @@ namespace AuthServerEfCore.Application.Migrator.Seed
                         new ClientClaim("server.character", "Xayah"),
                         new ClientClaim("orderapi.claim", "apiclaim"),
                     }
+                },
+                new Client
+                {
+                    ClientId = "react_app_id",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RequireClientSecret = false,
+                    AllowedScopes =
+                    {
+                        "OrderApi",
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    },
+                    RedirectUris = { "http://localhost:3000/authentication/callback" }
+                    // AllowAccessTokensViaBrowser = true
                 }
             };
         }
@@ -105,7 +119,7 @@ namespace AuthServerEfCore.Application.Migrator.Seed
         {
             return new List<ApiScope>
             {
-                new ApiScope("OrderApi", new []{ " orderapi.claim"}),
+                new ApiScope("OrderApi", new[] { " orderapi.claim" }),
                 new ApiScope("read"),
             };
         }
