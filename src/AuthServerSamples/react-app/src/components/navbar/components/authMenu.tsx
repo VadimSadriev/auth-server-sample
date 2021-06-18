@@ -3,11 +3,11 @@ import { Menu } from "antd";
 import { AuthContext } from "../../../application/contexts/auth";
 
 export const AuthMenu: React.FC = (props) => {
-  const authContext = React.useContext(AuthContext);
+  const { login, userManager } = React.useContext(AuthContext);
 
   const loginHandler = async (e: any) => {
     try {
-      await authContext.login();
+      await login();
     } catch (error) {
       console.log(error);
     }

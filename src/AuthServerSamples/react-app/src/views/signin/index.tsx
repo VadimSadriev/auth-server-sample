@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { AuthContext } from "../../application/contexts/auth";
 
 export const SignIn: React.FC = (props) => {
-  const { userManager } = useContext(AuthContext);
+  const { userManager, setUser } = useContext(AuthContext);
 
   const history = useHistory();
 
@@ -14,12 +14,15 @@ export const SignIn: React.FC = (props) => {
   const handleCallBack = async () => {
     try {
       await userManager?.signinCallback();
-     
+      const user = await userManager?.getUser();
+      
+      if (user)
+       setUser(user);
+
     } catch (error) {
       console.log(error);
-    }
-    finally{
-        history.push('/')
+    } finally {
+      history.push("/");
     }
   };
 

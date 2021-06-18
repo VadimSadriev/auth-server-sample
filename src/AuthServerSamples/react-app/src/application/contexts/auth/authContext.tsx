@@ -1,14 +1,20 @@
 import React from "react";
-import { UserManager } from 'oidc-client'
+import { UserManager, User } from 'oidc-client'
 
 export interface authConfig {
     userManager: UserManager | null,
-    login: Function
+    login: Function,
+    user: User | null,
+    setUser: (user: User) => void
 }
 
 export const AuthContext = React.createContext<authConfig>({
     userManager: null,
-    login: () => {
-        throw new Error("Login method not implemented")
+    user: null,
+    setUser: () => {
+        throw new Error("Set user not implemented")
+    },
+    login: (user: User) => {
+        throw new Error("Login not implemented")
     }
 })
