@@ -5,9 +5,9 @@ import { WebStorageStateStore } from "oidc-client";
 import { Routes } from "./routes";
 import { BrowserRouter as Router } from "react-router-dom";
 import "antd/dist/antd.css";
-import { AuthProvider } from "./application/contexts/auth";
+import { AuthProvider, authConfig } from "./application/contexts/auth";
 
-const oidcConfig = {
+const oidcConfig : authConfig = {
   userStore: new WebStorageStateStore({ store: window.localStorage }),
   authority: "http://localhost:5000",
   client_id: "react_app_id",

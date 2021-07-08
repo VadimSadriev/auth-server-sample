@@ -1,14 +1,8 @@
 import React from "react";
-import { UserManager, User } from 'oidc-client'
+import { User } from 'oidc-client'
+import { authSettings } from './authContext.Model'
 
-export interface authConfig {
-    userManager: UserManager | null,
-    login: Function,
-    user: User | null,
-    setUser: (user: User) => void
-}
-
-export const AuthContext = React.createContext<authConfig>({
+export const AuthContext = React.createContext<authSettings>({
     userManager: null,
     user: null,
     setUser: () => {
