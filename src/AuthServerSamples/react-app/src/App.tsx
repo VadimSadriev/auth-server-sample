@@ -7,7 +7,28 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "antd/dist/antd.css";
 import { AuthProvider, authConfig } from "./application/contexts/auth";
 
-const oidcConfig : authConfig = {
+const mockUser = {
+  access_token: "",
+  expired: false,
+  expires_at: 12412412412412412,
+  expires_in: 12412412412412412,
+  id_token: "",
+  scope: "openid profile",
+  scopes: [],
+  state: null,
+  toStorageString: () => "",
+  token_type: "Bearer",
+  profile: {
+    aud: "",
+    exp: 12,
+    iat: 1,
+    iss: "",
+    sub: "",
+    name: "Ahri"
+  }
+}
+
+const oidcConfig: authConfig = {
   userStore: new WebStorageStateStore({ store: window.localStorage }),
   authority: "http://localhost:5000",
   client_id: "react_app_id",
@@ -15,21 +36,24 @@ const oidcConfig : authConfig = {
   response_type: "code",
   post_logout_redirect_uri: "http://localhost:3000",
   scope: "openid profile",
+
+  mockUser: mockUser
 };
 
 function App() {
   return (
-    <div>
-      <AuthProvider {...oidcConfig}>
-        <Router>
+    <React.Fragment>
+      <Router>
+        <AuthProvider {...oidcConfig}>
+
           <MainLayout>
             <div className="App">
               <Routes />
             </div>
           </MainLayout>
-        </Router>
-      </AuthProvider>
-    </div>
+        </AuthProvider>
+      </Router>
+    </React.Fragment>
   );
 }
 

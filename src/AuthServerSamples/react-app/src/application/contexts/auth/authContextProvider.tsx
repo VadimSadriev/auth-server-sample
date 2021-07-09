@@ -3,29 +3,63 @@ import { AuthContext } from "./authContext";
 import { authConfig } from './authContext.Model'
 import { authConfigToUserManagerSettingsMapper } from './authContext.Mappers'
 import { UserManager, UserManagerSettings, User } from "oidc-client";
+import { useHistory } from 'react-router-dom'
 
 export const AuthProvider: React.FC<authConfig> = (props) => {
 
-  var [user, setUser] = useState<User | null>(null);
-
+  const [user, setUser] = useState<User | null>(null);
   const userManagerSettings = authConfigToUserManagerSettingsMapper(props)
-
   const [userManager, setUserManager] = useState(new UserManager(userManagerSettings));
+  const history = useHistory();
 
   const handleSetUser = (newUser: User) => {
     setUser(newUser);
   };
 
   useEffect(() => {
-    loadUser();
+    initAuthData();
   }, []);
 
-  const loadUser = async () => {
+  const initAuthData = async () => {
+
+    if (props.mockUser) {
+
+      setUser(props.mockUser)
+      return
+    }
+
     const user = await userManager.getUser();
-    
+
     if (user)
       setUser(user);
   };
+
+  const handleLogin = async () => {
+    try {
+      await userManager.signinRedirect();
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+
+      if (props.mockUser) {
+        setUser(null)
+        history.push('/')
+        return
+      }
+
+      await userManager.signoutRedirect()
+      setUser(null)
+
+    }
+    catch (err) {
+      console.log(err)
+    }
+  }
 
   return (
     <AuthContext.Provider
@@ -33,9 +67,9 @@ export const AuthProvider: React.FC<authConfig> = (props) => {
         user: user,
         userManager: userManager,
         setUser: handleSetUser,
-        login: async () => {
-          await userManager.signinRedirect();
-        },
+        login: handleLogin,
+        logout: handleLogout,
+        isAuthenticated: user?.expired
       }}
     >
       {props.children}

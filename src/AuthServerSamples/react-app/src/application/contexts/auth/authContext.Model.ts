@@ -15,6 +15,8 @@ export interface authConfig {
 export interface authSettings {
     userManager: UserManager | null,
     login: Function,
+    logout: Function,
     user: User | null,
-    setUser: (user: User) => void
+    setUser: (user: User) => void,
+    isAuthenticated: boolean | undefined
 }

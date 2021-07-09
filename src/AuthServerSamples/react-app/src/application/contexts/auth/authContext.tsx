@@ -10,5 +10,9 @@ export const AuthContext = React.createContext<authSettings>({
     },
     login: (user: User) => {
         throw new Error("Login not implemented")
-    }
+    },
+    logout: () => {
+        throw new Error("Logout is not implemented")
+    },
+    isAuthenticated: false
 })
