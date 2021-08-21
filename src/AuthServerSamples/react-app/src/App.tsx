@@ -28,16 +28,18 @@ const mockUser = {
   }
 }
 
+console.log(process.env)
+
 const oidcConfig: authConfig = {
   userStore: new WebStorageStateStore({ store: window.localStorage }),
-  authority: "http://localhost:5000",
-  client_id: "react_app_id",
-  redirect_uri: "http://localhost:3000/signin",
+  authority: `${process.env.REACT_APP_AUTHORITY}`,
+  client_id: `${process.env.REACT_APP_CLIENT_ID}`,
+  redirect_uri: `${process.env.REACT_APP_REDIRECT_URI}`,
   response_type: "code",
-  post_logout_redirect_uri: "http://localhost:3000",
+  post_logout_redirect_uri: `${process.env.REACT_APP_POST_LOGOUT_REDIRECT_URI}`,
   scope: "openid profile",
 
-  mockUser: mockUser
+  mockUser: null
 };
 
 function App() {

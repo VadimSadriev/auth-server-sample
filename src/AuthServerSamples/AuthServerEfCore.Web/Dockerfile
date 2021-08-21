@@ -1,5 +1,14 @@
 ﻿#-------------------------------------------------------------------------------
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS publish
+# update 
+RUN apt-get update && apt-get install -y \
+  ca-certificates \
+  curl
+
+ARG NODE_VERSION=14.17.0
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt-get install -y nodejs
+RUN npm install
 LABEL stage=build
 WORKDIR /app
 COPY . .

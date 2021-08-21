@@ -20,5 +20,9 @@
         <ProjectReference Include="..\AuthServerEfCore.PersistedGrant.DataLayer\AuthServerEfCore.PersistedGrant.DataLayer.csproj" />
         <ProjectReference Include="..\AuthServerEfCore.Web.Common\AuthServerEfCore.Web.Common.csproj" />
     </ItemGroup>
+    
+    <Target Name="BuildCss">
+        <Exec Command="yarn run build"/>
+    </Target>
 
 </Project>

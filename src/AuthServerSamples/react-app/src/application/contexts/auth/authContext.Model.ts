@@ -9,7 +9,7 @@ export interface authConfig {
     post_logout_redirect_uri: string,
     scope: string,
     
-    mockUser?: User
+    mockUser?: User | null
 }
 
 export interface authSettings {
